@@ -9,7 +9,17 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    @IBOutlet weak var treeimageview: UIImageView!
+    @IBOutlet weak var correctWorldLabel: UILabel!
+    @IBOutlet weak var scoreLabel: UILabel!
+    
+    @IBAction func buttonTapped(_ sender: UIButton) {
+        sender.isEnabled = false
+    }
+    
+    var listOfWords = ["Саша", "Маша"]
+    let incorrectMovesAllowed = 7
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -18,8 +28,22 @@ class ViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+       
+        newRound()
     }
-
-
+    
+    var currentGame: Game!
+    
+    func newRound(){
+        let newWord = listOfWords.removeFirst()
+        currentGame = Game(word: newWord, incorrectMovesRemaining: incorrectMovesAllowed)
+        updateUI()
+    }
+    
+    func updateUI(){
+       let name = "Tree \(currentGame.incorrectMovesRemaining)"
+        treeimageview.image = UIImage(named: name)
+    }
 }
+
 
